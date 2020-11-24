@@ -1,0 +1,88 @@
+    createUser = async () => {
+        const codkey = process.env.REACT_APP_API_KEY
+        
+        try {
+          
+          const response = await fetch("https://call-of-duty-modern-warfare.p.rapidapi.com/multiplayer/beau%2311804/battle", {
+            method: "GET",
+            headers: {
+                
+                "x-rapidapi-key": codkey,
+                "x-rapidapi-host": "call-of-duty-modern-warfare.p.rapidapi.com"
+                
+              }
+             
+
+              
+          })
+          
+            const data = await response.json()
+            console.log(data)
+            
+            this.setState({
+              kpm: data.data
+            })
+        
+          }
+          catch(err) {
+            console.log('Error in componentDidMount:')
+            console.log(err)
+          }
+        }
+
+
+  render() {
+    return (
+    
+      <React.Fragment>
+       
+         <div class='login'> 
+        
+        <Form onSubmit={this.handleSubmit}>
+      
+        
+          <Form.Group inline>
+           <Label>Username:</Label>
+           <Input size='mini'
+             type="text"
+             name="username"
+             placeholder="Enter a username"
+             value={this.state.username}
+             onChange={this.handleChange}
+           />
+       
+          <Label>Password:</Label>
+          <Input size='mini'
+            type="password"
+            name="password"
+            placeholder="Enter a password"
+            value={this.state.password}
+            onChange={this.handleChange}
+          />
+          
+          <Button secondary
+          size='mini'
+          type="Submit">
+            { this.state.action === "Login" ? "Login" : "Sign up"}
+          </Button></Form.Group> 
+        </Form></div>
+        {
+          
+          this.state.action === "Login"
+          ?
+          <div style={{ padding: 5}}>
+          <p align='left'>
+            Need an account? Sign up <span className="fake-link" onClick={this.switchForm}>here</span>.
+          </p>
+          </div>
+          :
+          <div style={{ padding: 5}}>
+          <p align='left'>
+            Already have an account? Log in <span className="fake-link" onClick={this.switchForm}>here</span>.
+          </p>
+          </div>
+        }
+      </React.Fragment>
+    )
+  }
+}
